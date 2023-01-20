@@ -1,0 +1,71 @@
+name: "Install googlechrome"
+      win_chocolatey: 
+        name: googlechrome
+        version: "{{ googlechrome_version }}"
+        allow_multiple: yes
+        state: present
+
+    - name: stop gupdate service
+      win_service:
+        name: gupdate
+        start_mode: disabled
+        state: stopped
+
+    - name: stop gupdatem service
+      win_service:
+        name: gupdatem
+        start_mode: disabled
+        state: stopped
+
+    - name: Add UpdateDefault
+      win_regedit:
+        path: HKLM:\SOFTWARE\Policies\Google\update
+        state: present
+        name: UpdateDefault
+        data: 0
+        type: dword
+$packageArgs = @{
+  packageName   = 'filebeat'
+  unzipLocation = "C:\Program Files\Filebeat\"
+  url           = 
+  checksum      = 
+  checksumType  = 'sha256'
+}
+
+Install-ChocolateyZipPackage @packageArgs
+[11:37 AM, 1/6/2023] Goats: $ErrorActionPreference = 'Stop';
+$toolsDir     = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+$fileLocation = ''
+
+#Based on Msi
+$packageArgs = @{
+  packageName   = $env:ChocolateyPackageName
+  softwareName  = 'Google Chrome*'
+  fileType      = 'msi'
+  silentArgs    = "/qn /norestart /lv* `"$env:TEMP\$env:ChocolateyPackageName.$env:ChocolateyPackageVersion.log`""
+  validExitCodes= @(0,1641,3010)
+  url           = 
+  checksum      = 
+  checksumType  = 'sha256'
+  url64bit      = ""
+  checksum64    = ''
+  checksumType64= 'sha256'
+  destination   = $toolsDir
+  #installDir   = "" # passed when you want to override install directory - requires licensed editions 1.9.0+
+}
+
+Install-ChocolateyPackage @packageArgs
+
+<#
+== MSI Properties ==
+These are the PRO…
+[11:37 AM, 1/6/2023] Goats: $packageArgs = @{
+  packageName    = $env:ChocolateyPackageName
+  fileType       = 'EXE'
+  url            = 
+  checksum       = 
+  checksumType   = 'sha256'
+  silentArgs     = '/S /qn'
+  validExitCodes = @(0, 3010, 1647)
+}
+Install-ChocolateyPackage @packageArgs
