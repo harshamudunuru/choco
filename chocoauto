@@ -1,0 +1,57 @@
+name: Manual Build
+ 
+permissions:
+  id-token: write
+  contents: read
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to Build
+        required: true
+        type: string
+        default: 7zip
+ 
+jobs:
+  deploy:
+    runs-on: [self-hosted, windows]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          fetch-depth: 0
+      
+      - name: Install Dependencies
+        run:  pip install --trusted-host="repo" -i https://${{ secrets.ART_USERNAME }}:${{ secrets.ART_PASSWORD }}@artifactory-cloud.org/artifactory/api/pypi/pypi/simple -r requirements.txt
+ 
+      - name: Run Choco Builder for Package
+        run: python choco-builder.py --package ${{ …
+ 
+permissions:
+  id-token: write
+  contents: read
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to Build
+        required: true
+        type: string
+        default: 7zip
+ 
+jobs:
+  deploy:
+    runs-on: [self-hosted, windows]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          fetch-depth: 0
+      
+      - name: Install Dependencies
+        run:  pip install --trusted-host=artifactory-cloud.org -i https://${{ secrets.ART_USERNAME }}:${{ secrets.ART_PASSWORD }}@artifactory-cloud.org/artifactory/api/pypi/pypi/simple -r requirements.txt
+ 
+      - name: Run Choco Builder for Package
+        run: python choco-builder.py --package ${{ …
