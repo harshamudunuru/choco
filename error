@@ -19,3 +19,28 @@ At C:\Users\hmudunuru_a\Desktop\choco-automation\Get-UpdatedPackagesv4.ps1:67 ch
     + CategoryInfo          : ObjectNotFound: (C:\Users\hmudun...co-automation\-:String) [Remove-Item], ItemNotFoundEx
    ception
     + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand
+
+
+
+iUpdating chocolateyInstall.ps1 with local resources.
+Recompiling package.
+Encountered error downloading package GoogleChrome v:
+System.ArgumentException: Value cannot be null or an empty string.
+Parameter name: root
+   at NuGet.PhysicalFileSystem..ctor(String root)
+   at NuGet.OptimizedZipPackage..ctor(String fullPackagePath)
+   at chocolatey.infrastructure.app.nuget.NugetPack.BuildPackage(PackageBuilder builder, IFileSystem fileSystem, String outputPath)
+   at chocolatey.licensed.infrastructure.app.commands.ProChocolateyDownloadCommand.#=zams9Oo235U_niYBUE6jBbfE=(IPackage #=zYvSuYI8=, ChocolateyConfiguration #=z1R5kuQ8=, String #=z_5SpgyOIk7cO, Boolean #=zOzysFELiTldh, LicensedChocolateyConfiguration #=zLNwTLVm8owSM2X7DNg==, HashSet`1 #=zIvhDqjY=)
+   at chocolatey.licensed.infrastructure.app.commands.ProChocolateyDownloadCommand.process_downloaded_package(IPackage package, String downloadLocation, ChocolateyConfiguration configuration)
+   at chocolatey.infrastructure.app.nuget.NugetCommon.<>c__DisplayClass14.<GetPackageManager>b__11(Object s, PackageOperationEventArgs e)
+   at NuGet.PackageManager.OnInstalled(PackageOperationEventArgs e)
+   at NuGet.PackageManager.Execute(IPackage package, IPackageOperationResolver resolver)
+   at NuGet.PackageManager.InstallPackage(IPackage package, Boolean ignoreDependencies, Boolean allowPrereleaseVersions)
+   at chocolatey.licensed.infrastructure.app.commands.ProChocolateyDownloadCommand.download_packages(String packageName, String packageVersion, String downloadLocation, ChocolateyConfiguration configuration)
+VERBOSE: Failed to download package 'GoogleChrome'.
+Remove-Item : Cannot find path 'C:\Users\hmudunuru_a\Desktop\choco-automation\-' because it does not exist.
+At C:\Users\hmudunuru_a\Desktop\choco-automation\Get-UpdatedPackagesv4.ps1:67 char:9
++         Remove-Item -$tempPath -Recurse -Force
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\hmudun...co-automation\-:String) [Remove-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand
